@@ -1,5 +1,7 @@
 package fr.isen.vincenti.isensmartcompanion
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
@@ -17,8 +19,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import fr.isen.vincenti.isensmartcompanion.ui.theme.IsenSmartCompanionTheme
-
 
 
 class EventDetailActivity : ComponentActivity() {
@@ -49,8 +53,16 @@ class EventDetailActivity : ComponentActivity() {
 }
 
 @Composable
-fun EventDetailScreen(eventId: String, title: String, description: String, date: String, location: String, category: String) {
+fun EventDetailScreen(
+    eventId: String,
+    title: String,
+    description: String,
+    date: String,
+    location: String,
+    category: String
+) {
     val activity = LocalActivity.current
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -96,7 +108,38 @@ fun EventDetailScreen(eventId: String, title: String, description: String, date:
             }
 
             Button(
-                onClick = { activity?.finish() },
+                onClick = {
+
+                    val CHANNEL_ID = "event_notifications_channel"
+
+                    val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.logo_min)
+                        .setContentTitle("$title is upcoming!")
+                        .setContentText("Happening on $date at $location")
+                        .setStyle(
+                            NotificationCompat.BigTextStyle()
+                                .bigText("Don't forget: $title is scheduled on $date at $location. Category: $category")
+                        )
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+                    with(NotificationManagerCompat.from(context)) {
+                        if (ActivityCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                        }
+                        notify(1, builder.build())
+                    }
+                },
+
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF800020),
                     contentColor = Color.White

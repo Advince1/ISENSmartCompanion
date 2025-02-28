@@ -5,5 +5,6 @@
     <string name="title_activity_history">HistoryActivity</string>
     <string name="event_notifications">Event Notifications</string>
     <string name="channel_description">Channel for event notifications</string>
+    <string name="event_id">Reminders</string>
 
 </resources>

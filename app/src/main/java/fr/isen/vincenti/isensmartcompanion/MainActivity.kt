@@ -14,11 +14,12 @@ import androidx.room.Room
 import fr.isen.vincenti.isensmartcompanion.ui.theme.IsenSmartCompanionTheme
 import fr.isen.vincenti.isensmartcompanion.composable.*
 import fr.isen.vincenti.isensmartcompanion.db.*
+import fr.isen.vincenti.isensmartcompanion.notifications.createNotificationChannel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        createNotificationChannel(this)
         val chatDao = DBInstance.getChatDao(applicationContext)
 
         enableEdgeToEdge()
