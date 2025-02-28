@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">IsenSmartCompanion</string>
+    <string name="logo_desc">IsenSmartCompanion_Logo</string>
+    <string name="main_placeholder">How can I help you ?</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="event_notifications">Event Notifications</string>
+    <string name="channel_description">Channel for event notifications</string>
+
+</resources>
