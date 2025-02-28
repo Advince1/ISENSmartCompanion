@@ -1,6 +1,7 @@
 package fr.isen.vincenti.isensmartcompanion
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -23,6 +24,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import fr.isen.vincenti.isensmartcompanion.ui.theme.IsenSmartCompanionTheme
+import android.content.SharedPreferences
+import fr.isen.vincenti.isensmartcompanion.notifications.scheduleNotification
 
 
 class EventDetailActivity : ComponentActivity() {
@@ -63,6 +66,8 @@ fun EventDetailScreen(
 ) {
     val activity = LocalActivity.current
     val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+    var isNotified by remember { mutableStateOf(sharedPreferences.getBoolean(eventId, false)) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -109,48 +114,24 @@ fun EventDetailScreen(
 
             Button(
                 onClick = {
+                    isNotified = !isNotified
+                    sharedPreferences.edit().putBoolean(eventId, isNotified).apply()
 
-                    val CHANNEL_ID = "event_notifications_channel"
-
-                    val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.logo_min)
-                        .setContentTitle("$title is upcoming!")
-                        .setContentText("Happening on $date at $location")
-                        .setStyle(
-                            NotificationCompat.BigTextStyle()
-                                .bigText("Don't forget: $title is scheduled on $date at $location. Category: $category")
-                        )
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-                    with(NotificationManagerCompat.from(context)) {
-                        if (ActivityCompat.checkSelfPermission(
-                                context,
-                                Manifest.permission.POST_NOTIFICATIONS
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            // TODO: Consider calling
-                            //    ActivityCompat#requestPermissions
-                            // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
-                        }
-                        notify(1, builder.build())
+                    if (isNotified) {
+                        scheduleNotification(context, title, date, location, category)
                     }
                 },
-
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF800020),
+                    containerColor = if (isNotified) Color.Green else Color.Gray,
                     contentColor = Color.White
                 ),
                 modifier = Modifier.weight(1f)
             ) {
                 Icon(
                     imageVector = Icons.Default.Notifications,
-                    contentDescription = "Notifications button",
+                    contentDescription = "Toggle Notification",
                 )
-                Text(text = "Get Notified")
+                Text(text = if (isNotified) "Unotify Me" else "Notify Me")
             }
         }
     }
