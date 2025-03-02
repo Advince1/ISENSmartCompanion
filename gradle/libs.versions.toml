@@ -1,5 +1,7 @@
 [versions]
 agp = "8.8.0"
+compose = "2.4.0"
+composeBomVersion = "2024.01.00"
 converterGson = "2.11.0"
 coreVersion = "2.2.0"
 firebaseBom = "33.9.0"
@@ -13,15 +15,20 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
 composeBom = "2024.04.01"
 activityKtx = "1.10.0"
+navigationComposeVersion = "2.7.6"
 navigationRuntimeKtx = "2.8.7"
 navigationCompose = "2.8.7"
 roomRuntime = "2.6.1"
 
 [libraries]
+androidx-compose-bom-v20240100 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
 androidx-core = { module = "androidx.core:core", version.ref = "coreVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-navigation-compose-v276 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+compose = { module = "com.kizitonwose.calendar:compose", version.ref = "compose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-vertexai = { module = "com.google.firebase:firebase-vertexai" }
@@ -42,8 +49,10 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+material3 = { module = "androidx.compose.material3:material3" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+ui = { module = "androidx.compose.ui:ui" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

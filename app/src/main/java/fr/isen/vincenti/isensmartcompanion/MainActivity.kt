@@ -20,7 +20,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel(this)
-        val chatDao = DBInstance.getChatDao(applicationContext)
 
         enableEdgeToEdge()
         setContent {
@@ -42,6 +41,5 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainPreview() {
     IsenSmartCompanionTheme {
-        MainScreen()
     }
 }

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,7 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import fr.isen.vincenti.isensmartcompanion.Event
+import fr.isen.vincenti.isensmartcompanion.models.Event
 import fr.isen.vincenti.isensmartcompanion.EventDetailActivity
 import fr.isen.vincenti.isensmartcompanion.api.RetrofitInstance.eventService
 
@@ -47,47 +49,63 @@ fun EventsScreen() {
                 .show()
         }
     }
-    LazyColumn(modifier = Modifier.padding(16.dp)) {
-        items(eventList) { event ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF800020)),
-                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Events",
+            style = MaterialTheme.typography.titleLarge,
+        )
+
+        Spacer(modifier = Modifier
+            .height(16.dp))
+
+        LazyColumn {
+            items(eventList) { event ->
+                Card(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF800020)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
-                    Text(
-                        text = event.title,
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.fillMaxWidth(),
-                        color = Color.White
-                    )
-                    HorizontalDivider(color = Color.White)
-                    Button(
-                        onClick = {
-                            val intent = Intent(context, EventDetailActivity::class.java).apply {
-                                putExtra("event", event)
-                            }
-                            context.startActivity(intent)
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = Color(0xFF800020)
-                        ),
-                        shape = RoundedCornerShape(50),
-                        modifier = Modifier
-                            .height(35.dp)
-                            .align(Alignment.CenterHorizontally)
-                            .fillMaxWidth(0.9f)
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = "View Details", style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            text = event.title,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.White
+                        )
+                        HorizontalDivider(color = Color.White)
+                        Button(
+                            onClick = {
+                                val intent =
+                                    Intent(context, EventDetailActivity::class.java).apply {
+                                        putExtra("event", event)
+                                    }
+                                context.startActivity(intent)
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.White,
+                                contentColor = Color(0xFF800020)
+                            ),
+                            shape = RoundedCornerShape(50),
+                            modifier = Modifier
+                                .height(35.dp)
+                                .align(Alignment.CenterHorizontally)
+                                .fillMaxWidth(0.9f)
+                        ) {
+                            Text(text = "View Details", style = MaterialTheme.typography.bodySmall)
+                        }
                     }
                 }
             }

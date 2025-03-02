@@ -1,4 +1,4 @@
-package fr.isen.vincenti.isensmartcompanion
+package fr.isen.vincenti.isensmartcompanion.models
 
 import java.io.Serializable
 

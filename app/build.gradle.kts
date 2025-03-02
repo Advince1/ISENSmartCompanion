@@ -57,8 +57,10 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.generativeai)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.compose)
     ksp(libs.androidx.room.compiler)
     implementation(libs.room.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

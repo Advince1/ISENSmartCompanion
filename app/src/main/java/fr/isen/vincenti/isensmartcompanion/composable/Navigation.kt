@@ -3,6 +3,7 @@ package fr.isen.vincenti.isensmartcompanion.composable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -24,7 +25,7 @@ fun BottomNavigationBar(navController: NavController) {
             onClick = { navController.navigate("home") }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.DateRange, contentDescription = "Events") },
+            icon = { Icon(Icons.Default.Info, contentDescription = "Events") },
             label = { Text("Events") },
             selected = navController.currentDestination?.route == "events",
             onClick = { navController.navigate("events") }
@@ -35,6 +36,12 @@ fun BottomNavigationBar(navController: NavController) {
             selected = navController.currentDestination?.route == "history",
             onClick = { navController.navigate("history") }
         )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.DateRange , contentDescription = "Calendar") },
+            label = { Text("Calendar") },
+            selected = navController.currentDestination?.route == "calendar",
+            onClick = { navController.navigate("calendar") }
+        )
     }
 }
 
@@ -44,5 +51,6 @@ fun NavigationGraph(navController: NavHostController) {
         composable("home") { MainScreen() }
         composable("events") { EventsScreen() }
         composable("history") { HistoryScreen() }
+        composable("calendar") { CalendarScreen() }
     }
 }

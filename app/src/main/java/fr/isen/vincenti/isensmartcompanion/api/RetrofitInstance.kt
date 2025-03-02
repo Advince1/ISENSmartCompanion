@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    val retrofit = Retrofit.Builder()
+    private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://isen-smart-companion-default-rtdb.europe-west1.firebasedatabase.app/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
