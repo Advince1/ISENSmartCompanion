@@ -26,8 +26,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import fr.isen.vincenti.isensmartcompanion.R
 import fr.isen.vincenti.isensmartcompanion.notifications.scheduleNotification
 
 @Composable
@@ -53,22 +56,22 @@ fun EventDetailScreen(
         Text(
             text = title,
             style = MaterialTheme.typography.headlineMedium,
-            color = Color(0xFF800020),
+            color = colorResource(id = R.color.red_grenat),
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
         HorizontalDivider(color = Color.Black, thickness = 3.dp)
         Spacer(modifier = Modifier.height(12.dp))
-        Text(text = "Description: $description", style = MaterialTheme.typography.bodyLarge)
+        Text(text = stringResource(R.string.description) + " $description", style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider(color = Color.Black, thickness = 1.dp)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "Date: $date", style = MaterialTheme.typography.bodyLarge)
+        Text(text = stringResource(R.string.date) + " $date", style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = "Location: $location", style = MaterialTheme.typography.bodyLarge)
+        Text(text = stringResource(R.string.location) + " $location", style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = "Category: $category", style = MaterialTheme.typography.bodyLarge)
+        Text(text = stringResource(R.string.category) + " $category", style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider(color = Color.Black, thickness = 1.dp)
         Spacer(modifier = Modifier.height(8.dp))
@@ -79,12 +82,12 @@ fun EventDetailScreen(
             Button(
                 onClick = { activity?.finish() },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF800020),
+                    containerColor = colorResource(id = R.color.red_grenat),
                     contentColor = Color.White
                 ),
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = "Back")
+                Text(text = stringResource(R.string.back))
             }
 
             Button(
@@ -97,16 +100,16 @@ fun EventDetailScreen(
                     }
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isNotified) Color.Gray else Color(0xFF800020),
+                    containerColor = if (isNotified) Color.Gray else colorResource(id = R.color.red_grenat),
                     contentColor = Color.White
                 ),
                 modifier = Modifier.weight(1f)
             ) {
                 Icon(
                     imageVector = Icons.Default.Notifications,
-                    contentDescription = "Toggle Notification",
+                    contentDescription = stringResource(R.string.toggle_notification),
                 )
-                Text(text = if (isNotified) "Unotify Me" else "Notify Me")
+                Text(text = if (isNotified) stringResource(R.string.unotify_me) else stringResource(R.string.notify_me))
             }
         }
     }

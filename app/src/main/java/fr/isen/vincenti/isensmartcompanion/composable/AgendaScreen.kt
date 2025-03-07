@@ -4,17 +4,34 @@ import android.content.Context
 import android.widget.CalendarView
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import fr.isen.vincenti.isensmartcompanion.R
 import fr.isen.vincenti.isensmartcompanion.models.Event
 import fr.isen.vincenti.isensmartcompanion.api.RetrofitInstance
 import fr.isen.vincenti.isensmartcompanion.utils.getCoursesForDate
@@ -25,7 +42,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @Composable
-fun CalendarScreen() {
+fun AgendaScreen() {
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
@@ -54,7 +71,7 @@ fun CalendarScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Agenda",
+            text = stringResource(R.string.agenda),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -98,9 +115,9 @@ fun CalendarScreen() {
                             .padding(vertical = 8.dp)
                     ) {
                         Text(
-                            text = "Cours",
+                            text = stringResource(R.string.courses),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Color(0xFF800020),
+                            color = colorResource(id = R.color.red_grenat),
                             modifier = Modifier.align(Alignment.Center)
                         )
                     }
@@ -113,7 +130,7 @@ fun CalendarScreen() {
                         .fillMaxWidth()
                         .padding(vertical = 4.dp, horizontal = 8.dp),
                     elevation = CardDefaults.cardElevation(8.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF800020))
+                    colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.red_grenat))
                 ) {
                     Column(
                         modifier = Modifier
@@ -131,22 +148,22 @@ fun CalendarScreen() {
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Salle : ${course.room}",
+                            text = stringResource(R.string.room) + " ${course.room}",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.White
                         )
                         Text(
-                            text = "Professeur : ${course.teacher}",
+                            text = stringResource(R.string.teacher) + " ${course.teacher}",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.White
                         )
                         Text(
-                            text = "Début : ${course.start_time} - Fin : ${course.end_time}",
+                            text = stringResource(R.string.start_time) + " ${course.start_time}" + " - " + stringResource(R.string.end_time) + " ${course.end_time}",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.White
                         )
                         Text(
-                            text = "Catégorie : ${course.category}",
+                            text = stringResource(R.string.category) + " ${course.category}",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.White
                         )
@@ -162,9 +179,9 @@ fun CalendarScreen() {
                             .padding(vertical = 8.dp)
                     ) {
                         Text(
-                            text = "Notified Event",
+                            text = stringResource(R.string.notified_event),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Color(0xFF800020),
+                            color = colorResource(id = R.color.red_grenat),
                             modifier = Modifier.align(Alignment.Center)
                         )
                     }
@@ -174,11 +191,11 @@ fun CalendarScreen() {
                             .fillMaxWidth()
                             .padding(vertical = 8.dp, horizontal = 8.dp),
                         elevation = CardDefaults.cardElevation(8.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF800020))
+                        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.red_grenat))
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text(
-                                text = "Event: ${event.title}",
+                                text = stringResource(R.string.event) + " ${event.title}",
                                 style = MaterialTheme.typography.titleMedium,
                                 color = Color.White,
                                 modifier = Modifier.padding(bottom = 8.dp)
@@ -186,8 +203,8 @@ fun CalendarScreen() {
                             HorizontalDivider(color = Color.White, thickness = 1.dp)
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            Text(text = "Date: ${event.date}", color = Color.White)
-                            Text(text = "Location: ${event.location}", color = Color.White)
+                            Text(text = stringResource(R.string.date) + " ${event.date}", color = Color.White)
+                            Text(text = stringResource(R.string.location) + " ${event.location}", color = Color.White)
                         }
                     }
                 }

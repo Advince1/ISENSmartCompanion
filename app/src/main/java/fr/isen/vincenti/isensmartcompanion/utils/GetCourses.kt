@@ -8,29 +8,23 @@ import java.io.InputStreamReader
 
 
 fun getCoursesForDate(selectedDate: String, context: Context): List<Course> {
-    // Accéder au fichier JSON dans raw
     val inputStream = context.resources.openRawResource(
         context.resources.getIdentifier("courses", "raw", context.packageName)
     )
     val reader = InputStreamReader(inputStream)
 
-    // Utiliser Gson pour analyser le fichier JSON
     val gson = Gson()
     val courseType = object : TypeToken<Map<String, Any>>() {}.type
     val jsonData = gson.fromJson<Map<String, Any>>(reader, courseType)
 
-    // Liste des cours
     val coursesList = mutableListOf<Course>()
 
-    // Récupérer la liste des cours dans le JSON
     val courses = jsonData["courses"] as? List<Map<String, Any>> ?: return coursesList
 
-    // Parcourir les cours et récupérer ceux correspondant à la date exacte
     for (course in courses) {
 
-        val courseDate = course["date"] as? String ?: continue  // S'assurer que "date" existe
+        val courseDate = course["date"] as? String ?: continue
 
-        // Comparer la date du cours avec la date sélectionnée
         if (courseDate == selectedDate) {
             val title = course["title"] as? String ?: ""
             val room = course["room"] as? String ?: ""
@@ -39,7 +33,6 @@ fun getCoursesForDate(selectedDate: String, context: Context): List<Course> {
             val teacher = course["teacher"] as? String ?: ""
             val category = course["category"] as? String ?: ""
 
-            // Ajouter le cours à la liste si les dates correspondent
             coursesList.add(Course(title, room, startTime, endTime, teacher, category))
         }
     }

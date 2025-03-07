@@ -44,7 +44,6 @@ fun scheduleNotification(context: Context, title: String, date: String, location
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
-    Log.d("test" , "scheduleNotification: $title")
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val triggerTime = SystemClock.elapsedRealtime() + 10000
 

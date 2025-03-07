@@ -34,6 +34,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import fr.isen.vincenti.isensmartcompanion.R
 import fr.isen.vincenti.isensmartcompanion.db.ChatDao
 import fr.isen.vincenti.isensmartcompanion.db.ChatMessage
 import fr.isen.vincenti.isensmartcompanion.db.DBInstance
@@ -63,7 +66,7 @@ fun HistoryScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Chat History",
+            text = stringResource(R.string.chat_history),
             style = MaterialTheme.typography.titleLarge
         )
 
@@ -77,7 +80,7 @@ fun HistoryScreen() {
                     onDelete = {
                         coroutineScope.launch {
                             chatDao.deleteMessage(message)
-                            Toast.makeText(context, "Message supprimé", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.message_deleted), Toast.LENGTH_SHORT).show()
                         }
                     }
                 )
@@ -88,13 +91,13 @@ fun HistoryScreen() {
             onClick = {
                 coroutineScope.launch {
                     chatDao.deleteAllMessages()
-                    Toast.makeText(context, "History Deleted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.history_deleted), Toast.LENGTH_SHORT).show()
                 }
             },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF800020), contentColor = Color.White),
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.red_grenat), contentColor = Color.White),
             modifier = Modifier.fillMaxWidth().padding(8.dp)
         ) {
-            Text("Delete History")
+            Text(stringResource(R.string.delete_history))
         }
     }
 }
@@ -108,23 +111,23 @@ fun HistoryItem(message: ChatMessage, onDelete: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .background(Color(0xFFEFEFEF), shape = RoundedCornerShape(8.dp))
+            .background(Color.White, shape = RoundedCornerShape(8.dp))
             .padding(12.dp)
     ) {
-        Text(text = "Date : $formattedDate", style = MaterialTheme.typography.bodyMedium)
+        Text(text = stringResource(R.string.date) + " $formattedDate", style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(3.dp))
         HorizontalDivider( thickness = 1.dp)
         Spacer(modifier = Modifier.height(3.dp))
-        Text(text = "Question :  ${message.question}", style = MaterialTheme.typography.bodyMedium)
+        Text(text = stringResource(R.string.question) + " ${message.question}", style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = "Answer :  ${message.answer}", style = MaterialTheme.typography.bodyMedium, color = Color.DarkGray)
+        Text(text = stringResource(R.string.answer) + " ${message.answer}", style = MaterialTheme.typography.bodyMedium, color = Color.DarkGray)
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color(0xFF800020))
+                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = colorResource(id = R.color.red_grenat))
             }
         }
     }

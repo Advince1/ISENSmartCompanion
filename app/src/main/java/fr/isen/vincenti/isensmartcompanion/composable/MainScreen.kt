@@ -1,6 +1,5 @@
 package fr.isen.vincenti.isensmartcompanion.composable
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,13 +30,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.isen.vincenti.isensmartcompanion.R
 import fr.isen.vincenti.isensmartcompanion.gemini.GeminiService
 import kotlinx.coroutines.launch
-import fr.isen.vincenti.isensmartcompanion.db.*
+import fr.isen.vincenti.isensmartcompanion.db.ChatMessage
+import fr.isen.vincenti.isensmartcompanion.db.DBInstance
 
 @Composable
 fun MainScreen() {
@@ -64,7 +65,7 @@ fun MainScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 40.dp, end = 10.dp, top = 10.dp, bottom = 10.dp)
-                            .background(Color(0xFFEFEFEF), shape = RoundedCornerShape(5.dp))
+                            .background(colorResource(id = R.color.user_question), shape = RoundedCornerShape(5.dp))
                     ){
                         Text(
                             text = question,
@@ -77,7 +78,7 @@ fun MainScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 10.dp, end = 40.dp, top = 10.dp, bottom = 10.dp)
-                            .background(Color(0xFFD9D9D9), shape = RoundedCornerShape(5.dp))
+                            .background(colorResource(id = R.color.ai_answer), shape = RoundedCornerShape(5.dp))
                     ){
                         Text(
                             text = answer,
@@ -93,7 +94,7 @@ fun MainScreen() {
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .padding(bottom = 10.dp, top = 10.dp)
-                .background(Color(0xFFDCDCDC), shape = RoundedCornerShape(50))
+                .background(colorResource(id = R.color.user_question_bar), shape = RoundedCornerShape(50))
         ) {
             OutlinedTextField(
                 modifier = Modifier
@@ -116,7 +117,8 @@ fun MainScreen() {
                         coroutineScope.launch {
                             savedinput = input
                             input = ""
-                            analyzedResponse = GeminiService.generateResponse(savedinput).trim()
+                            Toast.makeText(context, context.getString(R.string.processing_input), Toast.LENGTH_SHORT).show()
+                            analyzedResponse = GeminiService.generateResponse(context, savedinput).trim()
                             gemList = gemList + listOf(Pair(savedinput, analyzedResponse))
                             chatDao.insertMessage(
                                 ChatMessage(
@@ -126,15 +128,15 @@ fun MainScreen() {
                             )
                         }
                     } else {
-                        Toast.makeText(context, "Please enter text", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.please_enter_text), Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier = Modifier
-                    .background(Color(0xFF800020), shape = RoundedCornerShape(50))
+                    .background(colorResource(id = R.color.red_grenat), shape = RoundedCornerShape(50))
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
-                    contentDescription = "Send",
+                    contentDescription = stringResource(R.string.send),
                     tint = Color.White
                 )
             }

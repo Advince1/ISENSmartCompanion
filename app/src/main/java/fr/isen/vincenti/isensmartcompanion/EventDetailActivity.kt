@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import fr.isen.vincenti.isensmartcompanion.composable.EventDetailScreen
 import fr.isen.vincenti.isensmartcompanion.models.Event
@@ -18,12 +19,12 @@ class EventDetailActivity : ComponentActivity() {
         setContent {
             IsenSmartCompanionTheme {
                 EventDetailScreen(
-                    eventId = event?.id ?: "Unknown",
-                    title = event?.title ?: "No Title",
-                    description = event?.description ?: "No Description",
-                    date = event?.date ?: "No Date",
-                    location = event?.location ?: "No Location",
-                    category = event?.category ?: "No Category"
+                    eventId = event?.id ?: stringResource(R.string.unknown),
+                    title = event?.title ?: stringResource(R.string.no_title),
+                    description = event?.description ?: stringResource(R.string.no_description),
+                    date = event?.date ?: stringResource(R.string.no_date),
+                    location = event?.location ?: stringResource(R.string.no_location),
+                    category = event?.category ?: stringResource(R.string.no_category)
                 )
             }
         }

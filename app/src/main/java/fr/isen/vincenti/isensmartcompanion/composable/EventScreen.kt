@@ -29,10 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import fr.isen.vincenti.isensmartcompanion.models.Event
 import fr.isen.vincenti.isensmartcompanion.EventDetailActivity
+import fr.isen.vincenti.isensmartcompanion.R
 import fr.isen.vincenti.isensmartcompanion.api.RetrofitInstance.eventService
 
 @Composable
@@ -45,7 +48,7 @@ fun EventsScreen() {
         try {
             eventList = eventService.getEvents()
         } catch (e: Exception) {
-            Toast.makeText(context, "Error fetching events: ${e.message}", Toast.LENGTH_SHORT)
+            Toast.makeText(context, context.getString(R.string.error_fetching_events, e.message), Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -57,7 +60,7 @@ fun EventsScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Events",
+            text = stringResource(R.string.events),
             style = MaterialTheme.typography.titleLarge,
         )
 
@@ -70,7 +73,7 @@ fun EventsScreen() {
                     modifier = Modifier
                         .padding(vertical = 8.dp),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF800020)),
+                    colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.red_grenat)),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -96,7 +99,7 @@ fun EventsScreen() {
                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.White,
-                                contentColor = Color(0xFF800020)
+                                contentColor = colorResource(id = R.color.red_grenat)
                             ),
                             shape = RoundedCornerShape(50),
                             modifier = Modifier
@@ -104,7 +107,7 @@ fun EventsScreen() {
                                 .align(Alignment.CenterHorizontally)
                                 .fillMaxWidth(0.9f)
                         ) {
-                            Text(text = "View Details", style = MaterialTheme.typography.bodySmall)
+                            Text(text = stringResource(R.string.view_details), style = MaterialTheme.typography.bodySmall)
                         }
                     }
                 }
